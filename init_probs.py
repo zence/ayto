@@ -1,3 +1,4 @@
+import util
 import json
 
 contestants = {
@@ -64,12 +65,20 @@ if len(contestants['boy']) != len(contestants['girl']):
 probabilities = {}
 
 for boy in contestants['boy']:
-    probabilities[boy] = {}
-    for girl in contestants['girl']: 
-        probabilities[boy][girl] = 1 / len(contestants['boy'])
+    for girl in contestants['girl']:
+        couple = util.Couple(boy, girl)
+        probabilities[str(couple)] = 1 / len(contestants['boy'])
 
 with open('probabilities.json', 'w') as out_f:
     json.dump(probabilities, out_f)
 
+potentials = {}
+for boy in contestants['boy']:
+    potentials[boy] = len(contestants['girl'])
+for girl in contestants['girl']:
+    potentials[girl] = len(contestants['boy'])
+
+with open('potentials.json', 'w') as out_f:
+    json.dump(potentials, out_f)
 # Zak, Tevin, Kwasi, Brett, Tomas, Cam, Andrew, Moe, Daniel, Lewis, Shamoy
 # Kenya, Bria, Jasmine, Asia, Cali, Kayla, Lauren, Morgan, Maria, Nutsa, Samantha
